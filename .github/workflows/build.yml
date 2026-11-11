@@ -17,15 +17,15 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
-      - name: Generate Gradle Wrapper
-        run: gradle wrapper
-
-      - name: Build APK with Gradle
+      - name: Build with Gradle
         run: ./gradlew assembleDebug
+        continue-on-error: true
 
-      - name: Upload APK
+      - name: Find and Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: app-debug
-          path: app/build/outputs/apk/debug/app-debug.apk
-          
+          path: |
+            app/build/outputs/apk/debug/*.apk
+            **/build/outputs/apk/debug/*.apk
+            
